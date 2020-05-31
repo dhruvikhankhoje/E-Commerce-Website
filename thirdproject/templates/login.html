@@ -29,6 +29,18 @@
     <link rel="stylesheet" href="{% static 'css/flaticon.css'%}">
     <link rel="stylesheet" href="{% static 'css/icomoon.css'%}">
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <style>
+
+      .row {
+      display: flex;
+    }
+
+    .column {
+      padding: 10px;
+      flex: 50%;
+    }
+
+  </style>
   </head>
   <body class="goto-here">
 		<div class="py-1 bg-primary">
@@ -75,17 +87,29 @@
             </li>
 	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	       <!--   <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li> -->
-            <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Signup</a></li>
-            <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">MyAccount</a></li>
+            {% if user.is_authenticated %}
+            
+            <li class="nav-item cta cta-colored"><a href="{% url 'login' %}" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+            <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
+            {% else %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Your Account</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown04">
+              <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+              <a class="dropdown-item" href="{% url 'register' %}">Register</a>
+
+              </div>
+            </li>
+            <!--<li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Signup</a></li>
+            <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">MyAccount</a></li> -->
             <li class="nav-item"><a href="about.html" class="nav-link">Sell With Us!</a></li>
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
 	          <li class="nav-item cta cta-colored"><a href="{% url 'login' %}" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-
+            {% endif %}
 	        </ul>
 	      </div>
 	    </div>
-	  </nav>
-    <!-- END nav -->
+	  </nav><!-- END nav -->
 
     <section id="home-section" class="hero">
 		  <div class="home-slider owl-carousel">
@@ -122,43 +146,53 @@
 	      </div> -->
 	    </div>
     </section>
-    <div>
-         {% for message in messages %}
-         <h3> {{message}}</h3>
-         {% endfor %}
-     </div>
+
 
     <section class="ftco-section">
      <div class="container">
-       <div class="row no-gutters ftco-services">
-         <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
+      <!-- <div class="row no-gutters ftco-services">
+         <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate"> -->
+           <div class="row">
+
+             <div class="column" style="background-color:#FFFFFF;">
+               <h2>New to Vegefoods</h2>
+               <h4> Register with us!</h4>
+                 <a href="{% url 'register' %}" class="btn btn-primary py-3 px-5">Register</a>
+             </div>
+
+             <div class="column" style="background-color:#FFFFFF;">
+               <div>
+                    {% for message in messages %}
+                    <h3> {{message}}</h3>
+                    {% endfor %}
+                </div>
+
+               <form action="supplier_login" class="bg-white p-5 contact-form" method="post" novalidate="novalidate">
+
+                       {% csrf_token %}
 
 
-    <form action="login" class="row contact_form" method="post" novalidate="novalidate">
-
-                              {% csrf_token %}
-
+                             <div class="form-group">
 
                                 <!--<div class="col-md-12 form-group p_star">
                                     <input type="text" class="form-control" id="address" name="address" value=""
                                         placeholder="Address">
                                 </div> -->
-                                <div class="col-md-12 form-group p_star">
 
-
-                                    <input type="text" class="form-control" id="username" name="username" value=""
-                                        placeholder="Username">
-                                </div>
-                                <div class="col-md-12 form-group p_star">
-                                    <input type="password" class="form-control" id="password" name="password" value=""
-                                        placeholder="Password">
+                                  <input type="text" class="form-control" id="username" name="username" value=""
+                                      placeholder="Username">
                                 </div>
 
-                                  <div class="col-md-12 form-group p_star">
-                                <button type="submit" value="submit" class="btn_3">
-                                    Login
-                                </button>
+                                <div class="form-group">
+                                  <input type="text" class="form-control" id="password" name="password" value=""
+                                      placeholder="Password">
                                 </div>
+
+                                <div class="form-group">
+
+                                  <input type="submit" value="Login" class="btn btn-primary py-3 px-5">
+                                </div>
+                              </div>
                               <!--  <div class="col-md-12 form-group">
                                     <div class="creat_account d-flex align-items-center">
                                         <input type="checkbox" id="f-option" name="selector">

@@ -29,6 +29,19 @@
     <link rel="stylesheet" href="{% static 'css/flaticon.css'%}">
     <link rel="stylesheet" href="{% static 'css/icomoon.css'%}">
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <style>
+
+      .row {
+      display: flex;
+    }
+
+    .column {
+      padding: 10px;
+      flex: 50%;
+    }
+
+  </style>
+}
   </head>
   <body class="goto-here">
 		<div class="py-1 bg-primary">
@@ -75,17 +88,29 @@
             </li>
 	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	       <!--   <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li> -->
-            <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Signup</a></li>
-            <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">MyAccount</a></li>
+            {% if user.is_authenticated %}
+            <li class="nav-item"><a class="navbar-brand" >Welcome, {{user.first_name}}</a></li>
+            <li class="nav-item cta cta-colored"><a href="{% url 'login' %}" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+            <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
+            {% else %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Your Account</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown04">
+              <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+              <a class="dropdown-item" href="{% url 'register' %}">Register</a>
+
+              </div>
+            </li>
+            <!--<li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Signup</a></li>
+            <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">MyAccount</a></li> -->
             <li class="nav-item"><a href="about.html" class="nav-link">Sell With Us!</a></li>
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
 	          <li class="nav-item cta cta-colored"><a href="{% url 'login' %}" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-
+            {% endif %}
 	        </ul>
 	      </div>
 	    </div>
-	  </nav>
-    <!-- END nav -->
+	  </nav><!-- END nav -->
 
     <section id="home-section" class="hero">
 		  <div class="home-slider owl-carousel">
@@ -120,23 +145,95 @@
 	      </div> -->
 	    </div>
     </section>
-    <div>
-         {% for message in messages %}
-         <h3> {{message}}</h3>
-         {% endfor %}
-     </div>
 
-    <section class="ftco-section">
+
+    <section class="ftco-section" id="para1">
      <div class="container">
-       <div class="row no-gutters ftco-services">
-         <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
+       <!--<div class="row no-gutters ftco-services">
+         <div class="col-md-12 text-center d-flex align-self-stretch ftco-animate">
+           <div class="row block-9">
+             <div class="col-md-12 order-md-last d-flex"> -->
+               <div class="row">
 
+                 <div class="column" style="background-color:#FFFFFF;">
+                   <h2>Already Have An Account?</h2>
+                   <p>There are advances being made in science and technology
+                     everyday, and a good example of this is the</p>
+                     <a href="{% url 'login' %}" class="btn btn-primary py-3 px-5">Login</a>
+                 </div>
+                  <div class="column" style="background-color:#FFFFFF;"><div>
+                       
+                   <div>
+                        {% for message in messages %}
+                        <h3> {{message}}</h3>
+                        {% endfor %}
+                    </div>
+                    <h2>Sign Up Form</h2>
 
-    <form action="register" class="row contact_form" method="post" novalidate="novalidate">
+                      <form action="register" class="bg-white p-5 contact-form" method="post" novalidate="novalidate">
 
                               {% csrf_token %}
 
-                                <div class="col-md-12 form-group p_star">
+
+                                    <div class="form-group">
+                                      <input type="text" class="form-control" id="first_name" name="first_name" value=""
+                                          placeholder="First Name">
+
+                                    </div>
+                                    <div class="form-group">
+                                      <input type="text" class="form-control" id="last_name" name="last_name" value=""
+                                          placeholder="Last Name">
+
+                                    </div>
+                                    <div class="form-group">
+                                      <input type="text" class="form-control" id="email" name="email" value=""
+                                          placeholder="Email">
+                                    </div>
+
+                                    <div class="form-group">
+                                      <input type="text" class="form-control" id="username" name="username" value=""
+                                          placeholder="Username">
+                                    </div>
+
+                                    <div class="form-group">
+                                      <input type="password" class="form-control" id="password" name="password" value=""
+                                          placeholder="Password">
+                                    </div>
+
+                                    <div class="form-group">
+                                      <input type="password" class="form-control" id="confirm_password" name="confirm_password" value=""
+                                          placeholder="Confirm Password">
+                                    </div>
+
+                                    <div class="form-group">
+                                      <textarea name="address" id="" cols="30" rows="7" class="form-control" placeholder="Address"></textarea>
+                                    </div>
+                                    <div class="form-group">
+
+                                      <input type="submit" value="Register" class="btn btn-primary py-3 px-5">
+                                    </div>
+                                  </form>
+                                  </div>
+
+
+
+                                </div>
+                              </div>
+
+
+                                <!-- </div>
+                               </div>
+                              </div>
+                            </div> -->
+
+
+
+                          </section>
+                          <hr>
+
+
+
+                          <!--      <div class="col-md-12 form-group p_star">
                                     <input type="text" class="form-control" id="first_name" name="first_name" value="" placeholder="First Name">
                                 </div>
                                 <div class="col-md-12 form-group p_star">
@@ -149,7 +246,7 @@
                                     <input type="text" class="form-control" id="address" name="address" value=""
                                         placeholder="Address">
                                 </div> -->
-                                <div class="col-md-12 form-group p_star">
+<!--                                <div class="col-md-12 form-group p_star">
 
 
                                     <input type="text" class="form-control" id="username" name="username" value=""
@@ -173,11 +270,8 @@
                                     </button>
                                     <a class="lost_pass" href="#">forget password?</a>
                                 </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </section>
+                            </form> -->
+
 
      <section class="ftco-section">
 			<div class="container">
